@@ -1,6 +1,6 @@
 ## 📦 E-Commerce delivery delay prediction
 
-This project predicts whether an e-commerce order will be delayed using engineered logistics and product features.
+This project predicts whether an e-commerce order will be delivered late using engineered logistics, seller, and product features.
 
 It started as a notebook-based analysis project and was later turned into a working machine learning app with:
 - feature engineering
