@@ -36,3 +36,27 @@ Predict whether an order will be delivered late using order, seller, product, an
 
 ```bash
 uvicorn api.main:app --reload
+
+## Dashboard Preview
+
+### Main Dashboard
+
+![Dashboard Home](assets/dashboard_home.png)
+
+---
+
+### High Risk Prediction Example
+
+![High Risk Prediction](assets/dashboard_high_risk.png)
+
+---
+
+## API Preview
+
+![FastAPI Docs](assets/fastapi_docs.png)
+
+---
+
+## SHAP Feature Importance
+
+![SHAP Feature Importance](assets/shap_feature_importance.png)
