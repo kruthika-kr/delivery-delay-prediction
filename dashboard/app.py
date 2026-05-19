@@ -13,6 +13,11 @@ st.set_page_config(
 # dashboard title and description
 
 st.title("📦 E-Commerce Delivery Delay Prediction")
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Model", "LightGBM")
+col2.metric("ROC-AUC", "0.739")
+col3.metric("Features", "13")
 
 st.markdown("""
 This dashboard predicts the probability of an e-commerce order being delayed.
