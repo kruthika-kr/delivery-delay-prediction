@@ -1,5 +1,6 @@
 import streamlit as st
-import requests
+import pandas as pd
+import joblib
 
 # page configuration
 # this must be the FIRST streamlit command
@@ -137,47 +138,53 @@ payload = {
 
 # prediction button
 
+# prediction button
+
 if st.button("Predict Delay Risk"):
 
     try:
 
-        response = requests.post(
-            "http://127.0.0.1:8000/predict",
-            json=payload
+        # load trained model
+        model = joblib.load(
+            "models/lightgbm_delivery_delay.pkl"
         )
 
-        if response.status_code == 200:
+        # convert inputs into dataframe
+        df = pd.DataFrame([payload])
 
-            result = response.json()
+        # prediction probability
+        prob = model.predict_proba(df)[0][1]
 
-            # prediction label
+        # prediction label
+        prediction = (
+            "Late Delivery"
+            if prob >= 0.5
+            else "On-Time Delivery"
+        )
 
-            if result["prediction"] == "Late Delivery":
-                st.error(f"Prediction: {result['prediction']}")
-            else:
-                st.success(f"Prediction: {result['prediction']}")
+        # show prediction
 
-            # probability score
+        if prediction == "Late Delivery":
+            st.error(f"Prediction: {prediction}")
+        else:
+            st.success(f"Prediction: {prediction}")
 
-            st.metric(
-                "Delay Probability",
-                f"{result['delay_probability']:.2%}"
-            )
+        # probability score
+        st.metric(
+            "Delay Probability",
+            f"{prob:.2%}"
+        )
 
-            # risk interpretation
+        # risk interpretation
+        if prob >= 0.7:
+            st.warning("High delay risk detected")
 
-            if result["delay_probability"] >= 0.7:
-                st.warning("High delay risk detected")
-
-            elif result["delay_probability"] >= 0.4:
-                st.info("Moderate delay risk")
-
-            else:
-                st.success("Low delay risk")
+        elif prob >= 0.4:
+            st.info("Moderate delay risk")
 
         else:
-            st.error(f"API Error: {response.text}")
+            st.success("Low delay risk")
 
     except Exception as e:
-        st.error(f"Connection Error: {e}")
+        st.error(f"Prediction Error: {e}")
 
