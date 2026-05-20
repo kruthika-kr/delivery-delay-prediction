@@ -224,5 +224,5 @@ data/
 
 # Trained models
 models/*
-!models/.gitkeep
+!models/lightgbm_delivery_delay.pkl
 
