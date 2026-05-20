@@ -37,6 +37,10 @@ Predict whether an e-commerce order will be delivered late using order, seller, 
 - Recall at threshold 0.30: **0.789**
 
 ---
+## Live Demo
+
+Streamlit App:
+https://delivery-delay-prediction-ckd5goaklmdpgjfzivtlv5.streamlit.app/
 
 ## Dashboard Preview
 
