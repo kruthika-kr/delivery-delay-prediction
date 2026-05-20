@@ -1,15 +1,16 @@
 import streamlit as st
 import pandas as pd
 import joblib
-
-# page configuration
-# this must be the FIRST streamlit command
+from pathlib import Path
 
 st.set_page_config(
     page_title="Delivery Delay Predictor",
     page_icon="📦",
     layout="wide"
 )
+
+MODEL_PATH = Path(__file__).resolve().parents[1] / "models" / "lightgbm_delivery_delay.pkl"
+model = joblib.load(MODEL_PATH)
 
 # dashboard title and description
 
@@ -118,7 +119,7 @@ n_items = st.number_input(
     value=1
 )
 
-# payload sent to FastAPI backend
+# payload used for local model prediction
 
 payload = {
     "purchase_month": purchase_month,
@@ -143,12 +144,6 @@ payload = {
 if st.button("Predict Delay Risk"):
 
     try:
-
-        # load trained model
-        model = joblib.load(
-            "models/lightgbm_delivery_delay.pkl"
-        )
-
         # convert inputs into dataframe
         df = pd.DataFrame([payload])
 
